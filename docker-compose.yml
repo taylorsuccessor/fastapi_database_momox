@@ -1,0 +1,21 @@
+version: '2'
+services:
+  server:
+
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    working_dir: /home/ubuntu/app
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    expose:
+      - 8000
+    ports:
+      - "8000:8000"
+    volumes:
+          - .:/home/ubuntu/app
+
+    env_file:
+         - server.env
+
+    networks:
+      - default
