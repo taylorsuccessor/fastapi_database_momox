@@ -9,6 +9,6 @@ RUN cd /home/ubuntu/app
 ADD . .
 
 RUN pip install -r requirements.txt
-RUN pytest -vv || exit 1
+#RUN pytest -vv || exit 1
 # for production please remove --reload
 CMD [ "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8000" ]

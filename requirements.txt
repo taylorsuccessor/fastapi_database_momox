@@ -1,3 +1,5 @@
+aiosqlite==0.17.0
+alembic==1.7.7
 anyio==3.5.0
 asgiref==3.5.0
 attrs==21.4.0
@@ -5,11 +7,13 @@ certifi==2021.10.8
 charset-normalizer==2.0.12
 click==8.1.1
 fastapi==0.75.0
+greenlet==1.1.2
 h11==0.13.0
 httptools==0.4.0
 idna==3.3
 iniconfig==1.1.1
 Jinja2==3.1.1
+Mako==1.2.0
 MarkupSafe==2.1.1
 np==1.0.2
 numpy==1.22.3
@@ -27,6 +31,7 @@ PyYAML==6.0
 requests==2.27.1
 six==1.16.0
 sniffio==1.2.0
+SQLAlchemy==1.4.36
 starlette==0.17.1
 tomli==2.0.1
 typing_extensions==4.1.1
