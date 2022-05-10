@@ -21,6 +21,7 @@ def get_db():
     finally:
         db.close()
 
+
 def update(db: sessionmaker, object_class: Base, id: int, data: dict):
 
     item = db.query(object_class).get(id)
@@ -31,4 +32,3 @@ def update(db: sessionmaker, object_class: Base, id: int, data: dict):
     db.commit()
     db.refresh(item)
     return item
-
