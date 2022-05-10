@@ -32,3 +32,31 @@ def update(db: sessionmaker, object_class: Base, id: int, data: dict):
     db.commit()
     db.refresh(item)
     return item
+
+
+def create(db: sessionmaker, object_class: Base, data: dict):
+
+    item = object_class(**data)
+    db.add(item)
+    db.commit()
+    db.refresh(item)
+    return item
+
+
+def delete(db: sessionmaker, object_class: Base, id: int):
+
+    item = db.query(object_class).get(id)
+
+    if item:
+        db.delete(item)
+        db.commit()
+        db.close()
+    else:
+        raise HTTPException(status_code=404, detail=f"Book with id {id} not found")
+
+    return None
+
+
+def get(db: sessionmaker, object_class: Base, id: int):
+
+    return db.query(object_class).get(id)

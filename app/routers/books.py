@@ -9,7 +9,7 @@ from app.models import (
     BookStatus,
     get_status,
 )
-from app.database import get_db, update
+from app.database import get_db, update, create, delete, get
 from sqlalchemy.orm import Session
 
 books_router = APIRouter(
@@ -22,12 +22,7 @@ async def create_book(
     request: CreateBookRequest, db: Session = Depends(get_db)
 ) -> Book:
 
-    book = Book(**request.dict())
-    book.status = get_status(request.price, request.bookshelve_id)
-    db.add(book)
-    db.commit()
-    db.refresh(book)
-    return book
+    return create(db, Book, request.dict())
 
 
 @books_router.patch("/{book_id}")
@@ -35,8 +30,7 @@ async def update_book(
     book_id: int, request: UpdateBookRequest, db: Session = Depends(get_db)
 ) -> Book:
 
-    book = update(db, Book, book_id, request.dict(exclude_none=True))
-    return book
+    return update(db, Book, book_id, request.dict(exclude_none=True))
 
 
 @books_router.post("/bookshelve")
@@ -44,46 +38,21 @@ async def create_bookshelve(
     request: CreateBookshelveRequest, db: Session = Depends(get_db)
 ) -> Bookshelve:
 
-    bookshelve = Bookshelve(**request.dict())
-    db.add(bookshelve)
-    db.commit()
-    db.refresh(bookshelve)
-    return bookshelve
+    return create(db, Bookshelve, request.dict())
 
 
 @books_router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_book(id: int, db: Session = Depends(get_db)):
 
-    book = db.query(Book).get(id)
-
-    if book:
-        db.delete(book)
-        db.commit()
-        db.close()
-    else:
-        raise HTTPException(status_code=404, detail=f"Book with id {id} not found")
-
-    return None
-
+    return delete(db, Book, id)
 
 @books_router.delete("/bookshelve/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_book(id: int, db: Session = Depends(get_db)):
 
-    bookshelve = db.query(Bookshelve).get(id)
-
-    if bookshelve:
-        db.delete(bookshelve)
-        db.commit()
-        db.close()
-    else:
-        raise HTTPException(
-            status_code=404, detail=f"Bookshelve with id {id} not found"
-        )
-
-    return None
+    return delete(db, Bookshelve, id)
 
 
 @books_router.get("/{book_id}")
 async def create_book(book_id: int, db: Session = Depends(get_db)) -> Book:
 
-    return db.query(Book).get(book_id)
+    return get(db, Book, book_id)
