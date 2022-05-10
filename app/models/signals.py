@@ -2,6 +2,7 @@ from sqlalchemy import update
 from sqlalchemy.event import listens_for
 from .books import Book, Bookshelve, BookStatus
 
+
 def get_status(price, bookshelve_id) -> BookStatus:
 
     if price and price > 0:

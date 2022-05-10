@@ -37,4 +37,3 @@ class Bookshelve(Base):
     id = Column(Integer, primary_key=True, index=True)
     number = Column(Integer, default=0, index=True)
     books = relationship("Book", back_populates="bookshelve")
-

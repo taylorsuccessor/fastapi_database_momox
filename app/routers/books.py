@@ -45,6 +45,7 @@ def delete_book(id: int, db: Session = Depends(get_db)):
 
     return delete(db, Book, id)
 
+
 @books_router.delete("/bookshelve/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_book(id: int, db: Session = Depends(get_db)):
 
