@@ -7,7 +7,6 @@ from app.models import (
     Bookshelve,
     Book,
     BookStatus,
-    get_status,
 )
 from app.database import get_db, update, create, delete, get
 from sqlalchemy.orm import Session
