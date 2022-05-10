@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 
 from app.routers import books_router
-from app.database import init_db
 
 app = FastAPI()
 
@@ -13,7 +12,3 @@ def root():
             We Checked the connections to database and other
             part of the system and we make sure it's return correct status
             """}
-
-#@app.on_event("startup")
-#async def on_startup():
-#    await init_db()

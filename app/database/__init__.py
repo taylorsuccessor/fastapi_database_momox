@@ -1,1 +1,1 @@
-from .base import Base, get_db, init_db
+from .base import Base, get_db, update

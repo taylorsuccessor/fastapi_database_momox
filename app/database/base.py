@@ -2,6 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+# todo database url should be move to server.env also database url also to
+# share it to alembic
 SQLALCHEMY_DATABASE_URL = "sqlite:///./prod_sqlite_database.db"
 
 engine = create_engine(
@@ -19,10 +21,14 @@ def get_db():
     finally:
         db.close()
 
-# TODO: delete this function if you want to keep using another way
-def init_db():
-  # import all modules here that might define models so that
-  # they will be registered properly on the metadata.  Otherwise
-  # you will have to import them first before calling init_db()
-  import app.models
-  Base.metadata.create_all(engine)
+def update(db: sessionmaker, object_class: Base, id: int, data: dict):
+
+    item = db.query(object_class).get(id)
+    for attr, val in data.items():
+        setattr(item, attr, val)
+
+    db.add(item)
+    db.commit()
+    db.refresh(item)
+    return item
+
